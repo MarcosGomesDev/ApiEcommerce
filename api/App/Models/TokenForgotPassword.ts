@@ -3,7 +3,7 @@ const {Schema} = mongoose;
 
 interface IToken {
     id: string,
-    token: number
+    token: string
 }
 
 const TokenForgotPassword = new Schema<IToken>({
@@ -12,7 +12,7 @@ const TokenForgotPassword = new Schema<IToken>({
         required: true,
     },
     token: {
-        type: Number,
+        type: String,
         required: true,
     }
 });
