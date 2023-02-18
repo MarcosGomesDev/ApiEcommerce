@@ -8,14 +8,16 @@ const date = moment().format('LLL')
 
 const changePassword = async (req: Request, res: Response) => {
     const { password } = req.body
-    const { token } = req.params
+    const { token, email } = req.params
 
     try {
         if (!password) {
             return res.status(401).json("Por favor insira a senha!")
         }
 
-        const validToken = await TokenForgotPassword.findOne({ token: token });
+        const user = await User.findOne({ email: email })
+
+        const validToken = await TokenForgotPassword.findOne({ id: user?._id });
 
         if (!validToken) {
             return res.status(401).json("Token inválido ou expirado!");
@@ -26,8 +28,6 @@ const changePassword = async (req: Request, res: Response) => {
         if (!checkToken) {
             return res.status(401).json('Token inválida!')
         }
-
-        const user = await User.findOne({ _id: validToken.id })
 
         const checkPassword = await bcrypt.compare(password, user!.password)
 
