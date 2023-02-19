@@ -3,7 +3,7 @@ const {Schema} = mongoose;
 
 interface IToken {
     id: string,
-    token: string
+    token: string,
 }
 
 const TokenForgotPassword = new Schema<IToken>({
@@ -15,6 +15,8 @@ const TokenForgotPassword = new Schema<IToken>({
         type: String,
         required: true,
     }
-});
+}, {timestamps: true})
+
+TokenForgotPassword.index({createdAt: 1}, {expireAfterSeconds: 300})
 
 export default mongoose.model<IToken>('TokenForgotPassword', TokenForgotPassword)
