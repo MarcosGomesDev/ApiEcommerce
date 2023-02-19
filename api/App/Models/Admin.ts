@@ -7,12 +7,10 @@ interface ISocial {
     whatsapp: string
 }
 
-interface IAdmin {
+interface AdminProps {
     name: string,
     lastname: string,
-    storename: string,
     email: string,
-    credential: string,
     password: string,
     avatar: string,
     admin: boolean,
@@ -22,20 +20,12 @@ interface IAdmin {
     updatedAt: string,
 }
 
-const Admin = new Schema<IAdmin>({
+const Admin = new Schema<AdminProps>({
     name: {
         required: true,
         type: String
     },
     lastname: {
-        required: true,
-        type: String
-    },
-    storename: {
-        required: true,
-        type: String
-    },
-    credential: {
         required: true,
         type: String
     },
@@ -79,4 +69,4 @@ const Admin = new Schema<IAdmin>({
     }
 });
 
-export default mongoose.model<IAdmin>('Admin', Admin);
+export default mongoose.model<AdminProps>('Admin', Admin);

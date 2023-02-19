@@ -12,7 +12,7 @@ interface FileProps {
 declare namespace Express {
     export interface Request {
         userAuth: string;
-        sellerAuth: string;
+        adminAuth: string;
         file: Array[FileProps];
         files: Array[FileProps];
     }
