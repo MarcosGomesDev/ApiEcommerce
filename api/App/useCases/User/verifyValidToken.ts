@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
-import TokenForgotPassword from "../../Models/TokenForgotPassword";
 import User from "../../Models/User";
+import Token from "../../Models/Token";
 
 const verifyTokenIsValid = async (req: Request, res: Response) => {
     const {token} = req.body
@@ -14,7 +14,7 @@ const verifyTokenIsValid = async (req: Request, res: Response) => {
             return res.status(401).json('Token Inválido user')
         }
 
-        const validToken = await TokenForgotPassword.findOne({ id: user?._id });
+        const validToken = await Token.findOne({ userId: user?._id });
 
         if(!validToken) {
             return res.status(401).json('Token inválido!')

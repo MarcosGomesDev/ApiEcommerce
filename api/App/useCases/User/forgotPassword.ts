@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import sendEmail from "../../../Utils/sendEmail";
 import TokenForgotPassword from "../../Models/TokenForgotPassword";
 import User from "../../Models/User";
+import Token from "../../Models/Token";
 
 const forgotPassword = async (req: Request, res: Response) => {
     const { email } = req.body
@@ -24,8 +25,8 @@ const forgotPassword = async (req: Request, res: Response) => {
         
         const salt = await bcrypt.genSalt(12)
         const tokenHash = await bcrypt.hash(sort, salt)
-        await TokenForgotPassword.create({
-            id: user._id,
+        await Token.create({
+            userId: user._id,
             token: tokenHash
         })
 

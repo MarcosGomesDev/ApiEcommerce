@@ -5,5 +5,6 @@ namespace NodeJS {
         NODE_ENV: 'development' | 'production';
         PORT?: string;
         SECRET: string;
+        BASE_URL: string;
     }
 }

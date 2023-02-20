@@ -47,7 +47,7 @@ const changePassword = async (req: Request, res: Response) => {
             }
         })
 
-        await validToken.delete()
+        await validToken.remove()
 
         return res.status(200).json("Senha alterada com sucesso!");
     } catch (error) {

@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import moment from 'moment';
+import crypto from 'crypto'
 
 import User from '../../Models/User';
+import sendEmail from '../../../Utils/sendEmail';
+import Token from '../../Models/Token';
 
 const date = moment().format('LLL')
 
@@ -34,17 +37,27 @@ const createUser = async (req: Request, res: Response) => {
 
     try {
         // MÉTODO PARA SALVAR UM NOVO USUÁRIO
-        await User.create({
+        let user = await User.create({
             name,
             lastname,
             email,
             password: passwordHash,
+            active: false,
             admin: false,
             seller: false,
             createdAt: date
         });
 
-        return res.status(201).json('Usuário criado com sucesso!')
+        let token = await Token.create({
+            userId: user._id,
+            token: crypto.randomBytes(32).toString('hex')
+        })
+
+        const message = `${process.env.BASE_URL}/verify/${user._id}/${token.token}`;
+
+        await sendEmail(user.email, "Verify Email", message)
+
+        return res.status(201).json('An Email sent to your account please verify!')
     } catch (error) {
         console.log(error)
         return res.status(500).json('Erro ao criar usuário, tente novamente mais tarde!')

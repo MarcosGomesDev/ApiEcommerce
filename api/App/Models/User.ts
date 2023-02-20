@@ -8,6 +8,7 @@ interface UserProps {
     password: string,
     avatar: string,
     admin: boolean,
+    active: boolean,
     favorites: Array<string>,
     purchases: Array<string>,
     createdAt: string,
@@ -25,6 +26,7 @@ const User = new Schema<UserProps>({
     },
     email: {
         type: String,
+        unique: true,
         required: true
     },
     password: {
@@ -35,6 +37,10 @@ const User = new Schema<UserProps>({
         type: String
     },
     admin: {
+        type: Boolean,
+        required: true
+    },
+    active: {
         type: Boolean,
         required: true
     },

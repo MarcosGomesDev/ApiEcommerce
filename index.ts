@@ -19,6 +19,15 @@ connect().then(() => {
         app.use(userRoutes)
         app.use(adminRoutes)
 
+        app.get('/', (req, res) => {
+            res.send("Welcome to my api")
+        })
+
+        app.get("*", (req, res) => {
+            // res.sendFile(__dirname + "/api/Views/404.html")
+            return res.status(404).json('Page not found')
+        })
+
         app.listen(3003, () => {
             console.log('server on')
         })
@@ -26,7 +35,9 @@ connect().then(() => {
         
     } catch (error) {
         console.log("Can't connect to the server")
+        return express.response.status(500).json('Internal Server Error')
     }
 }).catch((error) => {
     console.log("Invalid Database Connection...!")
+    return express.response.status(500).json('Internal Server Error')
 })
