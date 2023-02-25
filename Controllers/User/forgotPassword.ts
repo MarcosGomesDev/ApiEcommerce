@@ -6,7 +6,7 @@ import sendEmail from '../emailController';
 const forgotPassword = asyncHandler(async (req, res) => {
     const {email} = req.body
 
-    const user = await User.findOne({email})
+    const user = await User.findOne({email: email})
 
     if(!user) throw new Error("User not Found with this email")
 
@@ -17,17 +17,21 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
         const resetURL = `Hi, Please follow this link to reset Your password. This link is valid till 10 minutes from now. <a href='http://localhost:3003/api/user/reset-password/${token}'>Click Here</a>`
 
-        const data = {
+        const data: any = {
             to: email,
             text: "Hey User",
             subject: "Forgot Password Link",
             htm: resetURL
         }
 
+        // @ts-ignore
         sendEmail(data)
 
         res.json(token)
+
+        
     } catch (error: any) {
+        console.log(error)
         throw new Error(error)
     }
 })

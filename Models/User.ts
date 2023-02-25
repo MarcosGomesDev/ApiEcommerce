@@ -11,7 +11,7 @@ interface UserProps {
     role: string,
     isBlocked: boolean,
     cart: Array<any> | undefined,
-    address: string,
+    address?: Array<string>,
     wishlist: Array<Types.ObjectId>,
     refreshToken: string,
     passwordChangedAt: Date,
@@ -62,9 +62,9 @@ const User = new mongoose.Schema<UserProps, UserModel, UserMethods>({
         type: Array,
         default: []
     },
-    address: {
+    address: [{
         type: String,
-    },
+    }],
     wishlist: [{
         type: Schema.Types.ObjectId,
         ref: "Product"

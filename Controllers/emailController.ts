@@ -1,7 +1,8 @@
 import nodemailer from 'nodemailer'
 import asyncHandler from 'express-async-handler';
 
-const sendEmail = async (data: any) => {
+const sendEmail = asyncHandler(async (data: any) => {
+
     let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -18,11 +19,11 @@ const sendEmail = async (data: any) => {
         html: data.htm
     })
 
-    console.log("Message sent: %s", send.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    // console.log("Message sent: %s", send.messageId);
+    // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-    // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(send));
-}
+    // // Preview only available when sending through an Ethereal account
+    // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(send));
+})
 
 export default sendEmail
